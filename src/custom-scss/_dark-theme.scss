@@ -1,0 +1,73 @@
+/* ================================
+   DARK THEME — DESIGN TOKENS
+   ================================ */
+
+/* ---------- Backgrounds / Surfaces ---------- */
+$bg-page: #0f172a;          // App / body background
+$bg-section: #111827;       // Sections / layout blocks
+$bg-card: #1f2933;          // Cards, modals
+$bg-hover: #273449;         // Hover surface
+$bg-overlay: rgba(0, 0, 0, 0.6); // Modal backdrop
+
+/* ---------- Borders / Dividers ---------- */
+$border-default: #2a3441;
+$border-subtle: rgba(255, 255, 255, 0.08);
+
+/* ---------- Text Colors ---------- */
+$text-primary: #e5e7eb;     // Main content
+$text-secondary: #9ca3af;   // Labels, descriptions
+$text-muted: #6b7280;       // Hints, meta
+$text-disabled: #4b5563;    // Disabled states
+$text-inverse: #111827;     // Text on light bg
+
+/* ---------- Primary Action (Brand) ---------- */
+$primary: #3b82f6;
+$primary-hover: #2563eb;
+$primary-active: #1d4ed8;
+
+/* ---------- Success ---------- */
+$success: #22c55e;
+$success-hover: #16a34a;
+$success-text: #86efac;
+
+/* ---------- Warning ---------- */
+$warning: #f59e0b;
+$warning-hover: #d97706;
+$warning-text: #fde68a;
+
+/* ---------- Danger / Error ---------- */
+$danger: #ef4444;
+$danger-hover: #dc2626;
+$danger-active: #b91c1c;
+$danger-text: #fca5a5;
+
+/* ---------- Info / Secondary ---------- */
+$info: #06b6d4;
+$info-hover: #0891b2;
+$info-text: #67e8f9;
+
+/* ---------- Buttons ---------- */
+$btn-primary-bg: $primary;
+$btn-primary-text: #ffffff;
+
+$btn-secondary-bg: $bg-card;
+$btn-secondary-text: $text-primary;
+$btn-secondary-border: $border-default;
+
+$btn-danger-bg: $danger;
+$btn-danger-text: #ffffff;
+
+/* ---------- Forms ---------- */
+$input-bg: $bg-section;
+$input-text: $text-primary;
+$input-border: $border-default;
+$input-focus-border: $primary;
+$input-placeholder: $text-muted;
+
+/* ---------- Tooltips ---------- */
+$tooltip-bg: $bg-hover;
+$tooltip-text: $text-primary;
+
+/* ---------- Shadows (minimal use in dark UI) ---------- */
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
