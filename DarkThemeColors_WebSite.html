@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Theme Design Tokens</title>
+    <style>
+        /* ============================================
+           APPLICATION BASE STYLES (Light Theme)
+           ============================================ */
+        
+        :root {
+            /* App Background - Light theme for documentation */
+            --app-bg: #f8fafc;
+            --app-surface: #ffffff;
+            --app-border: #e2e8f0;
+            --app-text-primary: #1e293b;
+            --app-text-secondary: #64748b;
+            --app-text-muted: #94a3b8;
+            --app-accent: #3b82f6;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-full: 9999px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--app-bg);
+            color: var(--app-text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* ============================================
+           HEADER STYLES
+           ============================================ */
+        
+        .header {
+            background: var(--app-surface);
+            border-bottom: 1px solid var(--app-border);
+            padding: var(--spacing-xl) var(--spacing-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--app-text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .header p {
+            color: var(--app-text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .header-badge {
+            display: inline-block;
+            background: var(--app-bg);
+            color: var(--app-text-secondary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: var(--spacing-sm);
+        }
+        
+        /* ============================================
+           MAIN CONTAINER
+           ============================================ */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+        
+        /* ============================================
+           SECTION STYLES
+           ============================================ */
+        
+        .section {
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--app-border);
+        }
+        
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--app-surface);
+            border: 1px solid var(--app-border);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--app-text-primary);
+        }
+        
+        .section-count {
+            font-size: 0.8rem;
+            color: var(--app-text-muted);
+            margin-left: auto;
+            background: var(--app-bg);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+        }
+        
+        /* ============================================
+           TOKEN GRID
+           ============================================ */
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        /* ============================================
+           TOKEN CARD
+           ============================================ */
+        
+        .token-card {
+            background: var(--app-surface);
+            border: 1px solid var(--app-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .token-card:hover {
+            border-color: var(--app-accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .token-card:active {
+            transform: translateY(0);
+        }
+        
+        .token-card.copied {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+        
+        /* Color Preview */
+        .color-preview {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+        }
+        
+        /* Shadow Preview Special Style */
+        .color-preview.shadow-preview {
+            background-color: #1e293b;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Token Info */
+        .token-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .token-name {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--app-text-primary);
+            margin-bottom: var(--spacing-xs);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .token-value {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--app-text-muted);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .token-value span {
+            background: var(--app-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        /* Copy Icon */
+        .copy-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--app-bg);
+            border: 1px solid var(--app-border);
+            border-radius: var(--radius-sm);
+            color: var(--app-text-muted);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .token-card:hover .copy-icon {
+            background: var(--app-surface);
+            border-color: var(--app-accent);
+            color: var(--app-accent);
+        }
+        
+        .token-card.copied .copy-icon {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+        
+        .copy-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* ============================================
+           COPY RIPPLE EFFECT
+           ============================================ */
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            transform: scale(0);
+            animation: ripple-animation 0.6s ease-out;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* ============================================
+           TOAST NOTIFICATION
+           ============================================ */
+        
+        .toast {
+            position: fixed;
+            bottom: var(--spacing-xl);
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--app-text-primary);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-full);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .toast-icon {
+            width: 18px;
+            height: 18px;
+            color: #22c55e;
+        }
+        
+        /* ============================================
+           INLINE COLOR PREVIEW
+           ============================================ */
+        
+        .inline-colors {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        
+        .inline-color {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .inline-color-swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .inline-color-swatch::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+        }
+        
+        .inline-color-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--app-text-muted);
+        }
+        
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .token-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: var(--spacing-lg) var(--spacing-md);
+            }
+            
+            .section-header {
+                flex-wrap: wrap;
+            }
+            
+            .section-count {
+                margin-left: 0;
+                margin-top: var(--spacing-xs);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Dark Theme Design Tokens</h1>
+            <p>A comprehensive color system for dark-themed interfaces</p>
+            <span class="header-badge">Click any token to copy</span>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Backgrounds & Surfaces -->
+        <section class="section" id="backgrounds">
+            <div class="section-header">
+                <div class="section-icon">⬜</div>
+                <h2 class="section-title">Backgrounds & Surfaces</h2>
+                <span class="section-count">5 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$bg-page" data-value="#0f172a">
+                    <div class="color-preview" style="background-color: #0f172a;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$bg-page</div>
+                        <div class="token-value"><span>#0f172a</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$bg-section" data-value="#111827">
+                    <div class="color-preview" style="background-color: #111827;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$bg-section</div>
+                        <div class="token-value"><span>#111827</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$bg-card" data-value="#1f2933">
+                    <div class="color-preview" style="background-color: #1f2933;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$bg-card</div>
+                        <div class="token-value"><span>#1f2933</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$bg-hover" data-value="#273449">
+                    <div class="color-preview" style="background-color: #273449;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$bg-hover</div>
+                        <div class="token-value"><span>#273449</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$bg-overlay" data-value="rgba(0, 0, 0, 0.6)">
+                    <div class="color-preview" style="background-color: rgba(0, 0, 0, 0.6);"></div>
+                    <div class="token-info">
+                        <div class="token-name">$bg-overlay</div>
+                        <div class="token-value"><span>rgba(0, 0, 0, 0.6)</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Borders & Dividers -->
+        <section class="section" id="borders">
+            <div class="section-header">
+                <div class="section-icon">➖</div>
+                <h2 class="section-title">Borders & Dividers</h2>
+                <span class="section-count">2 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$border-default" data-value="#2a3441">
+                    <div class="color-preview" style="background-color: #2a3441;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$border-default</div>
+                        <div class="token-value"><span>#2a3441</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$border-subtle" data-value="rgba(255, 255, 255, 0.08)">
+                    <div class="color-preview" style="background-color: rgba(255, 255, 255, 0.08);"></div>
+                    <div class="token-info">
+                        <div class="token-name">$border-subtle</div>
+                        <div class="token-value"><span>rgba(255, 255, 255, 0.08)</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Text Colors -->
+        <section class="section" id="text">
+            <div class="section-header">
+                <div class="section-icon">Aa</div>
+                <h2 class="section-title">Text Colors</h2>
+                <span class="section-count">5 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$text-primary" data-value="#e5e7eb">
+                    <div class="color-preview" style="background-color: #e5e7eb;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$text-primary</div>
+                        <div class="token-value"><span>#e5e7eb</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$text-secondary" data-value="#9ca3af">
+                    <div class="color-preview" style="background-color: #9ca3af;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$text-secondary</div>
+                        <div class="token-value"><span>#9ca3af</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$text-muted" data-value="#6b7280">
+                    <div class="color-preview" style="background-color: #6b7280;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$text-muted</div>
+                        <div class="token-value"><span>#6b7280</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$text-disabled" data-value="#4b5563">
+                    <div class="color-preview" style="background-color: #4b5563;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$text-disabled</div>
+                        <div class="token-value"><span>#4b5563</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$text-inverse" data-value="#111827">
+                    <div class="color-preview" style="background-color: #111827;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$text-inverse</div>
+                        <div class="token-value"><span>#111827</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Primary Action -->
+        <section class="section" id="primary">
+            <div class="section-header">
+                <div class="section-icon">🎨</div>
+                <h2 class="section-title">Primary Action (Brand)</h2>
+                <span class="section-count">3 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$primary" data-value="#3b82f6">
+                    <div class="color-preview" style="background-color: #3b82f6;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$primary</div>
+                        <div class="token-value"><span>#3b82f6</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$primary-hover" data-value="#2563eb">
+                    <div class="color-preview" style="background-color: #2563eb;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$primary-hover</div>
+                        <div class="token-value"><span>#2563eb</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$primary-active" data-value="#1d4ed8">
+                    <div class="color-preview" style="background-color: #1d4ed8;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$primary-active</div>
+                        <div class="token-value"><span>#1d4ed8</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Success -->
+        <section class="section" id="success">
+            <div class="section-header">
+                <div class="section-icon">✅</div>
+                <h2 class="section-title">Success</h2>
+                <span class="section-count">3 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$success" data-value="#22c55e">
+                    <div class="color-preview" style="background-color: #22c55e;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$success</div>
+                        <div class="token-value"><span>#22c55e</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$success-hover" data-value="#16a34a">
+                    <div class="color-preview" style="background-color: #16a34a;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$success-hover</div>
+                        <div class="token-value"><span>#16a34a</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$success-text" data-value="#86efac">
+                    <div class="color-preview" style="background-color: #86efac;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$success-text</div>
+                        <div class="token-value"><span>#86efac</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Warning -->
+        <section class="section" id="warning">
+            <div class="section-header">
+                <div class="section-icon">⚠️</div>
+                <h2 class="section-title">Warning</h2>
+                <span class="section-count">3 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$warning" data-value="#f59e0b">
+                    <div class="color-preview" style="background-color: #f59e0b;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$warning</div>
+                        <div class="token-value"><span>#f59e0b</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$warning-hover" data-value="#d97706">
+                    <div class="color-preview" style="background-color: #d97706;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$warning-hover</div>
+                        <div class="token-value"><span>#d97706</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$warning-text" data-value="#fde68a">
+                    <div class="color-preview" style="background-color: #fde68a;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$warning-text</div>
+                        <div class="token-value"><span>#fde68a</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Danger / Error -->
+        <section class="section" id="danger">
+            <div class="section-header">
+                <div class="section-icon">⛔</div>
+                <h2 class="section-title">Danger / Error</h2>
+                <span class="section-count">4 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$danger" data-value="#ef4444">
+                    <div class="color-preview" style="background-color: #ef4444;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$danger</div>
+                        <div class="token-value"><span>#ef4444</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$danger-hover" data-value="#dc2626">
+                    <div class="color-preview" style="background-color: #dc2626;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$danger-hover</div>
+                        <div class="token-value"><span>#dc2626</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$danger-active" data-value="#b91c1c">
+                    <div class="color-preview" style="background-color: #b91c1c;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$danger-active</div>
+                        <div class="token-value"><span>#b91c1c</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$danger-text" data-value="#fca5a5">
+                    <div class="color-preview" style="background-color: #fca5a5;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$danger-text</div>
+                        <div class="token-value"><span>#fca5a5</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Info / Secondary -->
+        <section class="section" id="info">
+            <div class="section-header">
+                <div class="section-icon">ℹ️</div>
+                <h2 class="section-title">Info / Secondary</h2>
+                <span class="section-count">3 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$info" data-value="#06b6d4">
+                    <div class="color-preview" style="background-color: #06b6d4;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$info</div>
+                        <div class="token-value"><span>#06b6d4</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$info-hover" data-value="#0891b2">
+                    <div class="color-preview" style="background-color: #0891b2;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$info-hover</div>
+                        <div class="token-value"><span>#0891b2</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$info-text" data-value="#67e8f9">
+                    <div class="color-preview" style="background-color: #67e8f9;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$info-text</div>
+                        <div class="token-value"><span>#67e8f9</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Buttons -->
+        <section class="section" id="buttons">
+            <div class="section-header">
+                <div class="section-icon">🔘</div>
+                <h2 class="section-title">Buttons</h2>
+                <span class="section-count">7 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$btn-primary-bg" data-value="$primary">
+                    <div class="color-preview" style="background-color: #3b82f6;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-primary-bg</div>
+                        <div class="token-value"><span>#3b82f6</span> (uses $primary)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-primary-text" data-value="#ffffff">
+                    <div class="color-preview" style="background-color: #ffffff;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-primary-text</div>
+                        <div class="token-value"><span>#ffffff</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-secondary-bg" data-value="$bg-card">
+                    <div class="color-preview" style="background-color: #1f2933;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-secondary-bg</div>
+                        <div class="token-value"><span>#1f2933</span> (uses $bg-card)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-secondary-text" data-value="$text-primary">
+                    <div class="color-preview" style="background-color: #e5e7eb;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-secondary-text</div>
+                        <div class="token-value"><span>#e5e7eb</span> (uses $text-primary)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-secondary-border" data-value="$border-default">
+                    <div class="color-preview" style="background-color: #2a3441;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-secondary-border</div>
+                        <div class="token-value"><span>#2a3441</span> (uses $border-default)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-danger-bg" data-value="$danger">
+                    <div class="color-preview" style="background-color: #ef4444;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-danger-bg</div>
+                        <div class="token-value"><span>#ef4444</span> (uses $danger)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$btn-danger-text" data-value="#ffffff">
+                    <div class="color-preview" style="background-color: #ffffff;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$btn-danger-text</div>
+                        <div class="token-value"><span>#ffffff</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Forms -->
+        <section class="section" id="forms">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2 class="section-title">Forms</h2>
+                <span class="section-count">5 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$input-bg" data-value="$bg-section">
+                    <div class="color-preview" style="background-color: #111827;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$input-bg</div>
+                        <div class="token-value"><span>#111827</span> (uses $bg-section)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$input-text" data-value="$text-primary">
+                    <div class="color-preview" style="background-color: #e5e7eb;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$input-text</div>
+                        <div class="token-value"><span>#e5e7eb</span> (uses $text-primary)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$input-border" data-value="$border-default">
+                    <div class="color-preview" style="background-color: #2a3441;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$input-border</div>
+                        <div class="token-value"><span>#2a3441</span> (uses $border-default)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$input-focus-border" data-value="$primary">
+                    <div class="color-preview" style="background-color: #3b82f6;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$input-focus-border</div>
+                        <div class="token-value"><span>#3b82f6</span> (uses $primary)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$input-placeholder" data-value="$text-muted">
+                    <div class="color-preview" style="background-color: #6b7280;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$input-placeholder</div>
+                        <div class="token-value"><span>#6b7280</span> (uses $text-muted)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tooltips -->
+        <section class="section" id="tooltips">
+            <div class="section-header">
+                <div class="section-icon">💬</div>
+                <h2 class="section-title">Tooltips</h2>
+                <span class="section-count">2 colors</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$tooltip-bg" data-value="$bg-hover">
+                    <div class="color-preview" style="background-color: #273449;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$tooltip-bg</div>
+                        <div class="token-value"><span>#273449</span> (uses $bg-hover)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$tooltip-text" data-value="$text-primary">
+                    <div class="color-preview" style="background-color: #e5e7eb;"></div>
+                    <div class="token-info">
+                        <div class="token-name">$tooltip-text</div>
+                        <div class="token-value"><span>#e5e7eb</span> (uses $text-primary)</div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Shadows -->
+        <section class="section" id="shadows">
+            <div class="section-header">
+                <div class="section-icon">🌑</div>
+                <h2 class="section-title">Shadows</h2>
+                <span class="section-count">2 shadows</span>
+            </div>
+            <div class="token-grid">
+                <div class="token-card" data-token="$shadow-sm" data-value="0 1px 2px rgba(0, 0, 0, 0.4)">
+                    <div class="color-preview shadow-preview" style="box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);"></div>
+                    <div class="token-info">
+                        <div class="token-name">$shadow-sm</div>
+                        <div class="token-value"><span>0 1px 2px rgba(0, 0, 0, 0.4)</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="token-card" data-token="$shadow-md" data-value="0 4px 12px rgba(0, 0, 0, 0.5)">
+                    <div class="color-preview shadow-preview" style="box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);"></div>
+                    <div class="token-info">
+                        <div class="token-name">$shadow-md</div>
+                        <div class="token-value"><span>0 4px 12px rgba(0, 0, 0, 0.5)</span></div>
+                    </div>
+                    <div class="copy-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <svg class="toast-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+    
+    <script>
+        // Toast functionality
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        let toastTimeout;
+        
+        function showToast(message) {
+            toastMessage.innerHTML = message;
+            toast.classList.add('show');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+        
+        // Create ripple effect
+        function createRipple(event, card) {
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            
+            const rect = card.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height) * 2;
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            card.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+        
+        // Copy functionality
+        async function copyToken(event) {
+            const card = event.currentTarget;
+            const tokenName = card.dataset.token;
+            const tokenValue = card.dataset.value;
+            
+            try {
+                await navigator.clipboard.writeText(tokenName);
+                
+                // Visual feedback
+                card.classList.add('copied');
+                createRipple(event, card);
+                showToast(`<strong>${tokenName}</strong> copied!`);
+                
+                setTimeout(() => {
+                    card.classList.remove('copied');
+                }, 1500);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showToast('Failed to copy. Please try again.');
+            }
+        }
+        
+        // Add click event listeners to all token cards
+        document.querySelectorAll('.token-card').forEach(card => {
+            card.addEventListener('click', copyToken);
+        });
+    </script>
+</body>
+</html>
