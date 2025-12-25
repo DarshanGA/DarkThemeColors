@@ -1170,7 +1170,7 @@
             const tokenValue = card.dataset.value;
             
             try {
-                await navigator.clipboard.writeText(tokenName);
+                await navigator.clipboard.writeText(tokenName + ": " + tokenValue);
                 
                 // Visual feedback
                 card.classList.add('copied');
